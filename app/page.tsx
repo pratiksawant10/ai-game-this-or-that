@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
+import { ModeToggle } from "@/components/mode-toggle"
 
 type Category = "Food" | "Sports" | "Science" | "Technology"
 
@@ -138,7 +139,10 @@ export default function ThisOrThatGame() {
 
   if (gameState === "category") {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative">
+        <div className="absolute top-4 right-4">
+          <ModeToggle />
+        </div>
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-4">This or That</h1>
           <p className="text-muted-foreground text-lg">Choose your category to start the elimination game!</p>
@@ -164,7 +168,10 @@ export default function ThisOrThatGame() {
     const finalWinner = currentChampion
 
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative">
+        <div className="absolute top-4 right-4">
+          <ModeToggle />
+        </div>
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-4">🎉 Winner! 🎉</h1>
           <div className="bg-card rounded-lg p-6 mb-6 max-w-sm">
@@ -196,7 +203,10 @@ export default function ThisOrThatGame() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-4">
+    <div className="min-h-screen bg-background p-4 relative">
+      <div className="absolute top-4 right-4">
+        <ModeToggle />
+      </div>
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
