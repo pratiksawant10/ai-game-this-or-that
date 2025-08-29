@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { ModeToggle } from "@/components/mode-toggle"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 type Category = "Food" | "Sports" | "Science" | "Technology"
 
@@ -90,7 +92,8 @@ const gameData: GameData = {
 }
 
 export default function ThisOrThatGame() {
-  const [gameState, setGameState] = useState<"category" | "playing" | "finished">("category")
+  const [gameState, setGameState] = useState<"name" | "category" | "playing" | "finished">("name")
+  const [playerName, setPlayerName] = useState("")
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
   const [currentRound, setCurrentRound] = useState(1)
   const [gameItems, setGameItems] = useState<GameItem[]>([])
@@ -135,6 +138,39 @@ export default function ThisOrThatGame() {
     setCurrentChampion(null)
     setNextChallenger(null)
     setEliminationHistory([])
+  }
+
+  if (gameState === "name") {
+    return (
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative">
+        <div className="absolute top-4 right-4">
+          <ModeToggle />
+        </div>
+        <div className="w-full max-w-sm space-y-4">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold">Welcome to This or That!</h1>
+            <p className="text-muted-foreground">Enter your name to begin.</p>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="name">Player Name</Label>
+            <Input
+              id="name"
+              placeholder="Enter your name"
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              className="text-center"
+            />
+          </div>
+          <Button
+            onClick={() => setGameState("category")}
+            className="w-full"
+            disabled={!playerName.trim()}
+          >
+            Start Game
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   if (gameState === "category") {
@@ -210,9 +246,14 @@ export default function ThisOrThatGame() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <Badge variant="secondary" className="text-sm">
-              {selectedCategory}
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Badge variant="secondary" className="text-sm">
+                {selectedCategory}
+              </Badge>
+              <Badge variant="default" className="text-sm">
+                {playerName}
+              </Badge>
+            </div>
             <Badge variant="outline" className="text-sm">
               Round {currentRound} of 10
             </Badge>
